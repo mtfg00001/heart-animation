@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>计算机的浪漫 - 爱心动态效果</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      overflow: hidden;
+      height: 100vh;
+    }
+    .popup {
+      position: absolute;
+      padding: 12px 8px;
+      border-radius: 8px;
+      color: #fff;
+      font-family: "PingFang SC", "微软雅黑", sans-serif;
+      font-size: 14px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.6s ease-in-out;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+      to {
+        opacity: 0.95;
+        transform: scale(1);
+      }
+    }
+    #startBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 14px 28px;
+      background-color: #ff69b4;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.5);
+      transition: all 0.3s ease;
+    }
+    #startBtn:hover {
+      background-color: #ff4da6;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <button id="startBtn">点击开始 · 计算机的浪漫</button>
+
+  <script>
+    const tips = [
+      "愿你天天开心，没有烦恼",
+      "好好吃饭，照顾好自己",
+      "每晚都能睡个好觉",
+      "祝你事事顺遂",
+      "平安健康，才是最重要的",
+      "每天都有一点小幸运",
+      "一切都会越来越好的",
+      "保持微笑，你笑起来最好看",
+      "愿你拥有温暖和安全感",
+      "简单快乐，知足常乐",
+      "充满能量，活力满满",
+      "所有努力都有回报",
+      "吃得好，睡得香，没病没灾",
+      "愿你心想事成",
+      "生活会越来越美好",
+      "拥有坚定的信念和勇气",
+      "每天进步一点点",
+      "愿你被世界温柔以待",
+      "保持积极乐观的心态",
+      "慢慢来，别急"
+    ];
+
+    const colors = [
+      "#FFB6C1", "#FFD700", "#FF69B4", "#FF6347", "#00CED1",
+      "#BA55D3", "#32CD32", "#87CEFA", "#8B00FF", "#98FB98",
+      "#FFA07A", "#20B2AA", "#FF4500", "#9370DB", "#3CB371"
+    ];
+
+    const startBtn = document.getElementById('startBtn');
+    startBtn.addEventListener('click', () => {
+      startBtn.style.display = 'none';
+      startAnimation();
+    });
+
+    // 修复：用回调函数确保获取到所有弹窗后再执行下一步
+    function startAnimation() {
+      heartFormation((heartPopups) => {
+        setTimeout(() => {
+          explodeHearts(heartPopups);
+          setTimeout(() => {
+            randomSpawn(() => {
+              setTimeout(() => {
+                heartFormation(() => {});
+              }, 3000);
+            });
+          }, 3000);
+        }, 5000);
+      });
+    }
+
+    function createPopup(x, y, text, color, isHeart = false) {
+      const popup = document.createElement('div');
+      popup.className = 'popup';
+      const width = isHeart ? 70 : 90;
+      const height = isHeart ? 50 : 70;
+      popup.style.width = `${width}px`;
+      popup.style.height = `${height}px`;
+      popup.style.left = `${Math.max(0, Math.min(x - width/2, window.innerWidth - width))}px`;
+      popup.style.top = `${Math.max(0, Math.min(y - height/2, window.innerHeight - height))}px`;
+      popup.style.backgroundColor = color;
+      popup.innerText = text;
+      document.body.appendChild(popup);
+      return popup;
+    }
+
+    // 修复：用回调函数返回所有弹窗，确保不遗漏
+    function heartFormation(callback) {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const centerX = screenWidth / 2;
+      const centerY = screenHeight / 2;
+      const count = 45;
+      const size = Math.min(screenWidth, screenHeight) / 9;
+      const positions = [];
+      const popups = [];
+
+      for (let i = 0; i < count; i++) {
+        const theta = i * 2 * Math.PI / count;
+        const r = size * (1 - 0.8 * Math.abs(theta / Math.PI - 1));
+        const x = centerX + r * (16 * Math.pow(Math.sin(theta), 3));
+        const y = centerY - r * (13 * Math.cos(theta) - 5 * Math.cos(2*theta) - 2 * Math.cos(3*theta) - Math.cos(4*theta));
+        positions.push({ x, y });
+      }
+
+      positions.forEach((pos, index) => {
+        setTimeout(() => {
+          const text = tips[Math.floor(Math.random() * tips.length)];
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const popup = createPopup(pos.x, pos.y, text, color, true);
+          popups.push(popup);
+          // 所有弹窗生成完毕后，调用回调返回数组
+          if (popups.length === count) {
+            callback(popups);
+          }
+        }, index * 60);
+      });
+    }
+
+    function explodeHearts(heartPopups) {
+      heartPopups.forEach(popup => {
+        setTimeout(() => {
+          const x = parseInt(popup.style.left) + parseInt(popup.style.width) / 2;
+          const y = parseInt(popup.style.top) + parseInt(popup.style.height) / 2;
+弹出窗口.移除()；弹出窗口.移除();
+常量文本=提示[数学.地板(数学.随机()*提示.长度数学]；常数文本=随机[数学.提示(数学.长度()*提示.长度)];
+Const颜色=颜色[数学.地板(数学.随机()*颜色.长度)；常数；常数；常数=颜色[数学=颜色[数学.地板(数学*随机.()]*
+ConstnewPopup=createPopup(X，y，文本，颜色)；常数newPopup=createPopup(X，y, 文本, 颜色);
+
+常数moveInterval=setInterval(()=>moveIntervalconst=setInterval=moveInterval(()=>{
+ConstDX=数学.随机()*8-4；常数=DX=随机；ConstDX)=数学.随机;
+ConstDy=数学.随机()*8-4；常数=Dy=随机；ConstDy)=数学.随机;
+newPopup.风格.左=左；newPopup=；newPopup${.=parseInt${newPopupnewPopupnewPopupnewPopupNewPopup(.newPopup)+风格$)PX’；
+newPopup。风格{=顶端{newPopup(newPopup='${parseInt(newPopup.风格.顶端)=parseInt$}newPopup
+}，60);}, 60);
+
+setTimeout(()=>clearInterval(moveInterval)，2000)；setTimeout=>clearInterval(()=>clearInterval(；
+}，数学。随机()*300)；}，数学.随机() * 300);
+      });
+    }
+
+// 修复：随机散布也用回调确保流程连贯// 修复：随机散布也用回调确保流程连贯
+函数randomSpawn(回调){功能randomSpawn(回调){
+ConstSpawnCount=35；常数=spawnCount=
+让繁殖的=0；让=繁殖的;
+为(让i=0<；i<繁殖计数；我{为++)=我=为<(<让++我=0；我
+setTimeout(()=>{setTimeout((=>{
+Constx=数学.随机()*(.窗户-innerWidth)+100窗户x=innerWidth.随机()+50；常数.x=数学).随机；
+常数y=数学.随机()*(.窗户-innerHeight)+80窗户y+40.；常数y)=数学窗户。随机-()*(；
+常量文本=提示[数学.地板(数学.随机()*提示.长度)；常数；常数=文本[数学=提示[数学.地板(数学*随机.()]*
+Const颜色=颜色[数学.地板(数学.随机()*颜色.长度)；常数；常数=颜色[数学=颜色[数学.地板(数学*随机.()]*
+createPopup(X，y，文本，颜色)；createPopup(X，y，文本，颜色)；
+繁殖的++；派生的++;
+如果(繁殖的如果(繁殖的===繁殖计数){如果(繁殖的===spawnCount){繁殖计数){如果(繁殖的===spawnCount){
+回调()；回调()回调()；回调();
+          }
+}，i}，i*120)；}，我*120)；120)；}，我*120)；
+      }
+    }
+</脚本>/脚本>
+</身体>/身体>
+</超文本标记语言>/超文本标记语言>
