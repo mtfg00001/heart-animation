@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>爱心动态效果</title>
+  <style>
+   body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+.popup {
+  position: absolute;
+  padding: 15px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: "微软雅黑", sans-serif;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+
+#startBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 12px 24px;
+  background: #ff69b4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 9999;
+}
+    /* 这里粘贴之前的 CSS 代码 */
+    body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+    .popup { position: absolute; padding: 15px; border-radius: 8px; color: #fff; font-family: "微软雅黑", sans-serif; text-align: center; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); animation: fadeIn 0.5s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 0.9; transform: scale(1); } }
+    #startBtn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 12px 24px; background: #ff69b4; color: #fff; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; z-index: 9999; }
+  </style>
+</head>
+<body>
+  <button id="startBtn">点击开始</button>
+  <script>
+    const tips = [
+  "愿你天天开心，没有烦恼。",
+  "好好吃饭，照顾好自己。",
+  "每晚都能睡个好觉。",
+  "祝你事事顺遂。",
+  "要平安健康，这是最重要的。",
+  "愿你每天都有一点小幸运。",
+  "一切都会越来越好的。",
+  "保持微笑，你笑起来最好看。",
+  "愿你拥有温暖和安全感。",
+  "简单快乐，知足常乐。",
+  "愿你充满能量，活力满满。",
+  "所有的努力都有回报。",
+  "吃得好，睡得香，没病没灾。",
+  "愿你心想事成。",
+  "每天都有一点小幸运。",
+  "生活会越来越美好的。",
+  "愿你拥有坚定的信念和勇气。",
+  "每天进步一点点。",
+  "愿你被世界温柔以待。",
+  "保持积极乐观的心态。",
+  "愿你拥有无限的创造力和灵感。",
+  "愿你每天都能发现生活中的美好。",
+  "愿你拥有坚定的信念和勇气。",
+  "愿你心中充满爱与希望。",
+  "慢慢来"
+];
+
+const colors = [
+  "#FFB6C1", "#FFD700", "#FF69B4", "#FF6347", "#00CED1",
+  "#BA55D3", "#32CD32", "#87CEFA", "#8B00FF", "#98FB98"
+];
+
+const startBtn = document.getElementById('startBtn');
+
+startBtn.addEventListener('click', () => {
+  startBtn.style.display = 'none';
+  startAnimation();
+});
+
+function startAnimation() {
+  // 爱心形成阶段
+  heartFormation();
+  setTimeout(() => {
+    // 爱心爆炸阶段
+    explodeHearts();
+    setTimeout(() => {
+      // 随机散布阶段
+      randomSpawn();
+      setTimeout(() => {
+        // 再次爱心形成阶段
+        heartFormation();
+      }, 3000);
+    }, 3000);
+  }, 5000);
+}
+
+function createPopup(x, y, text, color, isHeart = false) {
+  const popup = document.createElement('div');
+  popup.className = 'popup';
+  popup.style.left = `${x}px`;
+  popup.style.top = `${y}px`;
+  popup.style.backgroundColor = color;
+  popup.innerText = text;
+  popup.style.width = `${isHeart ? 80 : 100}px`;
+  popup.style.height = `${isHeart ? 60 : 80}px`;
+  document.body.appendChild(popup);
+  return popup;
+}
+
+function heartFormation() {
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+  const centerX = screenWidth / 2;
+  const centerY = screenHeight / 2;
+  const count = 50;
+  const size = Math.min(screenWidth, screenHeight) / 8;
+
+  const positions = [];
+  for (let i = 0; i < count; i++) {
+    const theta = i * 2 * Math.PI / count;
+    const r = size * (1 - 0.9 * Math.abs(theta / Math.PI - 1));
+    const x = centerX + r * (16 * Math.pow(Math.sin(theta), 3));
+    const y = centerY - r * (13 * Math.cos(theta) - 5 * Math.cos(2*theta) - 2 * Math.cos(3*theta) - Math.cos(4*theta));
+    positions.push({ x: x, y: y });
+  }
+
+  const popups = [];
+  positions.forEach((pos, index) => {
+    setTimeout(() => {
+      const text = randomTip();
+      const color = randomColor();
+      const popup = createPopup(pos.x, pos.y, text, color, true);
+      popups.push(popup);
+    }, index * 50);
+  });
+
+  return popups;
+}
+
+function explodeHearts() {
+  const popups = document.querySelectorAll('.popup');
+  popups.forEach(popup => {
+    setTimeout(() => {
+      const x = parseInt(popup.style.left);
+      const y = parseInt(popup.style.top);
+      popup.remove();
+      const text = randomTip();
+      const color = randomColor();
+      const newPopup = createPopup(x, y, text, color);
+      // 随机移动
+      const moveInterval = setInterval(() => {
+        const dx = Math.random() * 10 - 5;
+        const dy = Math.random() * 10 - 5;
+        newPopup.style.left = `${parseInt(newPopup.style.left) + dx}px`;
+        newPopup.style.top = `${parseInt(newPopup.style.top) + dy}px`;
+      }, 50);
+      // 一段时间后停止移动
+      setTimeout(() => {
+        clearInterval(moveInterval);
+      }, 2000);
+    }, Math.random() * 300);
+  });
+}
+
+function randomSpawn() {
+  const spawnCount = 30;
+  for (let i = 0; i < spawnCount; i++) {
+    setTimeout(() => {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      const text = randomTip();
+      const color = randomColor();
+      createPopup(x, y, text, color);
+    }, i * 100);
+  }
+}
+
+function randomTip() {
+  return tips[Math.floor(Math.random() * tips.length)];
+}
+
+function randomColor() {
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+    // 这里粘贴之前的 JavaScript 代码（从 const tips = [...] 开始）
+    const tips = ["愿你天天开心...", ...]; // 完整 JS 代码
+    const colors = ["#FFB6C1", ...];
+    // 后续 JS 代码...
+  </script>
+</body>
+</html>
