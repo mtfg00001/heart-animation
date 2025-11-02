@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <!-- 适配手机屏幕，确保动画在手机上显示正常 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>计算机的浪漫 - 爱心动态效果</title>
+  <style>
+    /* 动画样式（原 CSS 代码） */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* 弹窗样式：彩色、半透明、带阴影 */
+    .popup {
+      position: absolute;
+      padding: 12px 8px;
+      border-radius: 8px;
+      color: #fff;
+      font-family: "PingFang SC", "微软雅黑", sans-serif;
+      font-size: 14px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.6s ease-in-out;
+      z-index: 10;
+    }
+
+    /* 弹窗出现动画 */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+      to {
+        opacity: 0.95;
+        transform: scale(1);
+      }
+    }
+
+    /* 开始按钮样式：粉色、居中、突出显示 */
+    #startBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 14px 28px;
+      background-color: #ff69b4;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    #startBtn:hover {
+      background-color: #ff4da6;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <!-- 开始按钮：点击后触发动画 -->
+  <button id="startBtn">点击开始 · 计算机的浪漫</button>
+
+  <script>
+    // 1. 配置数据（鼓励文字和彩色弹窗颜色）
+    const tips = [
+      "愿你天天开心，没有烦恼",
+      "好好吃饭，照顾好自己",
+      "每晚都能睡个好觉",
+      "祝你事事顺遂",
+      "平安健康，才是最重要的",
+      "每天都有一点小幸运",
+      "一切都会越来越好的",
+      "保持微笑，你笑起来最好看",
+      "愿你拥有温暖和安全感",
+      "简单快乐，知足常乐",
+      "充满能量，活力满满",
+      "所有努力都有回报",
+      "吃得好，睡得香，没病没灾",
+      "愿你心想事成",
+      "生活会越来越美好",
+      "拥有坚定的信念和勇气",
+      "每天进步一点点",
+      "愿你被世界温柔以待",
+      "保持积极乐观的心态",
+      "慢慢来，别急"
+    ];
+
+    const colors = [
+      "#FFB6C1", "#FFD700", "#FF69B4", "#FF6347", "#00CED1",
+      "#BA55D3", "#32CD32", "#87CEFA", "#8B00FF", "#98FB98",
+      "#FFA07A", "#20B2AA", "#FF4500", "#9370DB", "#3CB371"
+    ];
+
+    // 2. 获取开始按钮，绑定点击事件
+    const startBtn = document.getElementById('startBtn');
+    startBtn.addEventListener('click', () => {
+      startBtn.style.display = 'none'; // 隐藏按钮
+      startAnimation(); // 启动动画流程
+    });
+
+    // 3. 核心动画流程：爱心形成→爆炸→随机散布→再次爱心
+    function startAnimation() {
+      // 阶段1：爱心形成（5秒后进入下一阶段）
+      const heartPopups = heartFormation();
+      setTimeout(() => {
+        // 阶段2：爱心爆炸（3秒后进入下一阶段）
+        explodeHearts(heartPopups);
+        setTimeout(() => {
+          // 阶段3：随机散布弹窗（3秒后进入最终阶段）
+          randomSpawn();
+          setTimeout(() => {
+            // 阶段4：最终爱心形成（循环动画）
+            heartFormation();
+          }, 3000);
+        }, 3000);
+      }, 5000);
+    }
+
+    // 4. 生成单个弹窗（可指定位置、文字、颜色）
+    function createPopup(x, y, text, color, isHeart = false) {
+      const popup = document.createElement('div');
+      popup.className = 'popup';
+      // 控制弹窗大小：爱心阶段小一点，随机阶段大一点
+      const width = isHeart ? 70 : 90;
+      const height = isHeart ? 50 : 70;
+      popup.style.width = `${width}px`;
+      popup.style.height = `${height}px`;
+      // 定位弹窗（避免超出屏幕）
+      popup.style.left = `${Math.max(0, Math.min(x - width/2, window.innerWidth - width))}px`;
+      popup.style.top = `${Math.max(0, Math.min(y - height/2, window.innerHeight - height))}px`;
+      popup.style.backgroundColor = color;
+      popup.innerText = text;
+      document.body.appendChild(popup);
+      return popup;
+    }
+
+    // 5. 爱心形成动画（根据数学公式生成爱心形状的弹窗位置）
+    功能心形成() {
+      ConstscreenWidth=窗户.innerWidth;
+      ConstscreenHeight=窗户.innerHeight;
+      ConstcenterX=screenWidth / 2; //屏幕中心X
+      Const中心=screenHeight / 2; //屏幕中心Y
+      Const数数=45; // 弹窗数量（越多爱心越饱满）
+      Const大小=数学.最小值(screenWidth, screenHeight) / 9; // 爱心大小
+
+      Const职位=[];
+      // 数学公式生成爱心坐标（笛卡尔心形线）
+      为 (让我=0; 我<数数; 我++) {
+        ConstTheta=我 * 2 * 数学.Pi / 数数;
+        constr=大小 * (1 - 0.8 * 数学.防抱死制动系统(Theta / 数学.Pi - 1));
+        Constx=centerX+r * (16 * 数学.POW(数学.罪恶(Theta), 3));
+        康斯蒂=中心 - r * (13 * 数学.Cos(Theta) - 5 * 数学.Cos(2*Theta) - 2 * 数学.Cos(3*Theta) - 数学.Cos(4*Theta));
+        职位.推({ x, y });
+      }
+
+      Const弹出窗口=[];
+      // 逐个生成弹窗，营造「慢慢组成爱心」的效果
+      职位.foreach((POS, 指数)=>{
+        setTimeout(()=>{
+          Const文本=提示[数学.地板(数学.随机() * 提示.长度)];
+          Const颜色=颜色[数学.地板(数学.随机() * 颜色.长度)];
+          Const弹出窗口=createPopup(POS.x, POS.y, 文本, 颜色, 正确);
+          弹出窗口.推(弹出窗口);
+        }, 指数 * 60); // 每个弹窗间隔60毫秒出现
+      });
+
+      返回;
+    }
+
+    // 6. 爱心爆炸动画（原爱心弹窗消失，生成新弹窗并随机移动）
+    功能解释心脏弹出心脏弹出风格
+      heartPopups.foreach(弹出窗口=>{
+        文件(()=>setTimeout
+          返回
+          Constx=parseInt(弹出窗口.风格.左)+parseInt(弹出窗口.风格.宽度)/2;
+          康斯蒂=parseInt(弹出窗口.风格.顶端)+parseInt(弹出窗口.风格.高度) / 2;
+          // 移除原弹窗
+          弹出窗口.移除();
+          // 生成新弹窗并随机移动
+          Const文本=提示[数学.地板(数学.随机()*提示.长度)];
+          Const颜色=颜色[数学.地板(数学.随机()*颜色.长度)];
+          ConstnewPopup=createPopup(X，y，文本，颜色);
+
+          // 弹窗随机移动（持续2秒）
+          ConstmoveInterval=setInterval(()=>{
+            ConstDX=数学.随机()*8 - 4; // 左右移动（-4到4像素）
+            // 2. 获取开始按钮，绑定点击事件=数学.随机()*8 - 4; // 上下移动（-4到4像素）
+            newPopup.风格.左=getElementById${parseInt(newPopup.风格.左)+DX}PX’；
+newPopup。风格.顶端=‘.$=={(newPopup==parseInt.{newPopup+DynewPopupPX'；'；{newPopup(\f25Dy}PX'newPopup.风格.顶端)+Dy}PX'；
+}, 60);, 60);
+
+// 2秒后停止移动
+setTimeout(()=>clearInterval(moveInterval)，2000)；(()=>clearInterval(moveInterval)，2000)；
+}, 数学.随机() * 300); // 弹窗爆炸时间随机（0到300毫秒）, 数学.随机() * 300); // 弹窗爆炸时间随机（0到300毫秒）
+      });
+    }
+
+// 7. 随机散布动画（在屏幕各处生成弹窗）
+功能randomSpawn(){(){
+ConstspawnCount=35；//随机生成的弹窗数量=35；//随机生成的弹窗数量
+为(让我=0；我<spawnCount；我++){(让我=0；我<spawnCount；我++){
+setTimeout(()=>{(()=>{
+// 随机位置（避免超出屏幕）
+Constx=数学.随机()*(窗户.innerWidth-100)+50；=数学.随机()*(窗户.innerWidth-100)+50；
+康斯蒂=数学.随机()*(窗户.内部高度-80)+40；=数学.随机()*(窗户.内部高度-80)+40；
+Const文本=提示[数学.地板(数学.随机()*提示.长度)]；=提示[数学.地板(数学.随机()*提示.长度)]；
+Const颜色=颜色[数学.地板(数学.随机()*颜色.长度)]；=颜色[数学.地板(数学.随机()*颜色.长度)]；
+createPopup(X，y，文本，颜色)；(X，y，文本，颜色)；
+}, 我 * 120); // 每个弹窗间隔120毫秒出现, 我 * 120); // 每个弹窗间隔120毫秒出现
+      }
+    }
+<</脚本>
+/</身体>>
+</超文本标记语言>/超文本标记语言>
