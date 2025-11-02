@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>计算机的浪漫 - 爱心动态效果</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      overflow: hidden;
+      height: 100vh;
+    }
+    .popup {
+      position: absolute;
+      padding: 12px 8px;
+      border-radius: 8px;
+      color: #fff;
+      font-family: "PingFang SC", "微软雅黑", sans-serif;
+      font-size: 14px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.6s ease-in-out;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+      to {
+        opacity: 0.95;
+        transform: scale(1);
+      }
+    }
+    #startBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 14px 28px;
+      background-color: #ff69b4;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.5);
+      transition: all 0.3s ease;
+    }
+    #startBtn:hover {
+      background-color: #ff4da6;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <button id="startBtn">点击开始 · 计算机的浪漫</button>
+
+  <script>
+    const tips = [
+      "愿你天天开心，没有烦恼",
+      "好好吃饭，照顾好自己",
+      "每晚都能睡个好觉",
+      "祝你事事顺遂",
+      "平安健康，才是最重要的",
+      "每天都有一点小幸运",
+      "一切都会越来越好的",
+      "保持微笑，你笑起来最好看",
+      "愿你拥有温暖和安全感",
+      "简单快乐，知足常乐",
+      "充满能量，活力满满",
+      "所有努力都有回报",
+      "吃得好，睡得香，没病没灾",
+      "愿你心想事成",
+      "生活会越来越美好",
+      "拥有坚定的信念和勇气",
+      "每天进步一点点",
+      "愿你被世界温柔以待",
+      "保持积极乐观的心态",
+      "慢慢来，别急"
+    ];
+
+    const colors = [
+      "#FFB6C1", "#FFD700", "#FF69B4", "#FF6347", "#00CED1",
+      "#BA55D3", "#32CD32", "#87CEFA", "#8B00FF", "#98FB98",
+      "#FFA07A", "#20B2AA", "#FF4500", "#9370DB", "#3CB371"
+    ];
+
+    const startBtn = document.getElementById('startBtn');
+    startBtn.addEventListener('click', () => {
+      startBtn.style.display = 'none';
+      startAnimation();
+    });
+
+    // 修复：用回调函数确保获取到所有弹窗后再执行下一步
+    function startAnimation() {
+      heartFormation((heartPopups) => {
+        setTimeout(() => {
+          explodeHearts(heartPopups);
+          setTimeout(() => {
+            randomSpawn(() => {
+              setTimeout(() => {
+                heartFormation(() => {});
+              }, 3000);
+            });
+          }, 3000);
+        }, 5000);
+      });
+    }
+
+    function createPopup(x, y, text, color, isHeart = false) {
+      const popup = document.createElement('div');
+      popup.className = 'popup';
+      const width = isHeart ? 70 : 90;
+      const height = isHeart ? 50 : 70;
+      popup.style.width = `${width}px`;
+      popup.style.height = `${height}px`;
+      popup.style.left = `${Math.max(0, Math.min(x - width/2, window.innerWidth - width))}px`;
+      popup.style.top = `${Math.max(0, Math.min(y - height/2, window.innerHeight - height))}px`;
+      popup.style.backgroundColor = color;
+      popup.innerText = text;
+      document.body.appendChild(popup);
+      return popup;
+    }
+
+    // 修复：用回调函数返回所有弹窗，确保不遗漏
+    function heartFormation(callback) {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const centerX = screenWidth / 2;
+      const centerY = screenHeight / 2;
+      const count = 45;
+      Const 大小=数学.最小值(screenWidth, screenHeight) / 9;
+      Const 职位=[];
+      Const 弹出窗口=[];
+
+      为 (让 我=0; 我<数数; 我++) {
+        Const Theta=我 * 2 * 数学.Pi / 数数;
+        Const r=大小 * (1 - 0.8 * 数学.防抱死制动系统(Theta / 数学.Pi - 1));
+        Const x=centerX+r * (16 * 数学.POW(数学.罪恶(Theta), 3));
+        Const y=中心 - r * (13 * 数学.Cos(Theta) - 5 * 数学.Cos(2*Theta) - 2 * 数学.Cos(3*Theta) - 数学.Cos(4*Theta));
+        职位.推({ x, y });
+      }
+
+      职位.foreach((POS, 指数)=>{
+        setTimeout(()=>{
+          Const 文本=提示[数学.地板(数学.随机() * 提示.长度)];
+          Const 颜色=颜色[数学.地板(数学.随机() * 颜色.长度)];
+          Const 弹出窗口=createPopup(POS.x, POS.y, 文本, 颜色, 正确);
+          弹出窗口.推(弹出窗口);
+          // 所有弹窗生成完毕后，调用回调返回数组
+          如果 (弹出窗口.长度===数数) {
+回调(弹出窗口);回调(弹出窗口);
+}}
+}，指数*60);}, 指数*60);
+});});
+}}
+
+功能explayHearts(heartPopups){功能explayHearts(heartPopups) {
+heartPopups.foreach(弹出窗口=>foreachheartPopups.弹出窗口(弹出窗口=>{
+setTimeout(()setTimeout(setTimeout)(=>{
+ConstxConstx=parseInt(弹出窗口.风格.左+)(弹出窗口+parseInt.宽度弹出窗口+风格弹出窗口=宽度.(=弹出窗口)弹出窗口/2.=；常数x((=宽度弹出窗口弹出窗口.parseInt(弹出窗口.风格.左弹出窗口/)(弹出窗口+parseInt.宽度弹出窗口+风格弹出窗口=宽度.(=弹出窗口)弹出窗口/2.=；常数x左=宽度弹出窗口弹出窗口.
+常数y常数y=parseInt(弹出窗口(弹出窗口.y=parseInt)+弹出窗口(弹出。风格.顶端)+parseInt；常量弹出窗口=风格(弹出。高度.parseInt；常量弹出窗口=风格(弹出窗口.高度.顶端)+parseInt；y=弹出窗口)/风格；ypopup=parseInt.顶端)+弹出窗口弹出窗口=风格弹出窗口弹出窗口.风格.顶端)+parseInt；常量(弹出窗口弹出窗口=风格.高度弹出窗口/高度；parseInt(弹出窗口(弹出窗口.y=parseInt)+弹出窗口(弹出。风格.顶端)+parseInt；常量弹出窗口=风格(弹出。高度.parseInt；常量弹出窗口=风格(弹出窗口.高度.顶端)+parseInt；y=弹出窗口)/风格；ypopup=parseInt.顶端)+弹出窗口弹出窗口=风格弹出窗口弹出窗口.风格.顶端)+parseInt；常量(弹出窗口弹出窗口=风格.高度弹出窗口/高度;
+弹出窗口弹出窗口。 弹出窗口弹出窗口弹出窗口。弹出窗口；弹出窗口。移除(；弹出窗口；弹出窗口。弹出窗口弹出窗口。 弹出窗口弹出窗口弹出窗口。；弹出窗口。移除弹出窗口；弹出窗口。 移除；弹出窗口；弹出窗口。；弹出窗口；弹出窗口；弹出窗口。 弹出窗口弹出窗口。)
+常量文本常量文本常量文本常量文本常量文本常量文本常量文本常量文本=常数[数学文本(数学=提示(数学*地板.长度数学数学；Const文本=地板；常数文本=随机(数学.提示(；常数=长度.长度数学]*提示Math.长度)数学；常数数学数学数学=；常数.(数学数学；常数[数学数学数学*提示]数学数学.提示[=；常数；常量文本数学常数[数学文本(数学=提示(数学*地板.长度数学数学；Const文本=地板；常数文本=随机(数学.提示(；常数=长度.长度数学]*提示Math.长度)数学；常数数学数学数学=；常数.(数学数学；常数[数学数学数学*提示]数学数学.提示[=；常数；常量文本数学
+常量颜色颜色=colorConst颜色数学.[数学数学.颜色(数学=地板.长度数学]；常数颜色*地板[数学.长度数学]；常数；常数颜色=随机(数学=颜色.(数学]；常数长度数学。颜色(数学*颜色()*长度].；常数颜色；常数[)](数学数学；常数长度数学。[数学数学；常数长度数学。 颜色(；常数颜色；常数[.颜色colorConst颜色数学.[数学数学.颜色(数学=地板.长度数学]；常数颜色*地板[数学.长度数学]；常数；常数颜色=随机(数学=颜色.(数学]；常数长度数学。颜色(数学*颜色()*长度].；常数颜色；常数[)](数学数学；常数长度数学。[数学数学；常数长度数学。颜色(；常数颜色；常数[.颜色
+ConstnewPopupnewPopup=newPopupConstnewPopupX，y，文本，颜色)；常数newPopup=newPopup=newPopupXX)=(XX(，newPopup=createPopup=createPopup；常数；常数createPopup=X，y，文本，颜色(newPopupConstnewPopupX，y，文本，颜色X，y，文本，颜色；常数newPopupnewPopupConstnewPopupX，y，文本，颜色X，y，文本，颜色；常数newPopup=newPopup=(=，newPopup)=文本X，y，文本，颜色文本，newPopup=文本x；常数=))
+
+常数moveInterval常数moveInterval常数moveInterval常数moveInterval常数moveInterval常数moveInterval常数moveInterval常数moveInterval=常数常数moveInterval常数moveInterval常数moveInterval常数moveInterval常数moveInterval常数moveInterval)=(()=Const()=setInterval)=setInterval(()=>{=Const=setInterval(()=>moveIntervalconstConstConst(()=>moveIntervalconst=setInterval=setInterval(()=>{
+ConstDXdxConstDXdx=Const.DX()=数学-随机；ConstDX=数学.随机()*8-随机；常数；常数=DX().数学-随机；ConstDX*数学-随机；常数=).DX-Const.DX()=数学-随机；ConstDX=数学.随机()*8-随机；常数；常数=DX().数学-随机；ConstDX*数学-随机；常数=).DX-
+ConstDydyConstDydy=Const.Dy()=数学-随机；ConstDy=数学.随机.随机()*8-随机；常数；常数=Dy().数学-随机；ConstDy*数学-随机；常数=随机；ConstDy=数学-Const.Dy()=数学-随机；ConstDy=数学.随机.随机()*8-随机；常数；常数=Dy().数学-随机；ConstDy*数学-随机；常数=随机；ConstDy=数学-
+newPopupnewPopupnewPopupnewPopupNewPopup.newPopup。风格=左；newPopup=左；newPopup；newPopup=；newPopup${==========parseInt${。.newPopup${newPopup(newPopupnewPopup(newPopup+风格左}PX'；newPopupPX'；newPopup(newPopupPX'；newPopupPX'；newPopupPXnewPopup；newPopup('；newPopupnewPopupnewPopupPX+DX}PX'；newPopupPX'+newPopup).newPopup。风格=左；newPopup=左；newPopup；newPopup=；newPopup${==========parseInt${。.newPopup${newPopup(newPopupnewPopup(newPopup+风格左}PX'；newPopupPX'；newPopup(newPopup.PX'；newPopup；newPopup'；newPopup('；newPopupnewPopupnewPopupPX'；newPopup；newPopup'；newPopupDX'；newPopupnewPopupnewPopupPX+DX}PX'PX'；newPopup('；newPopupnewPopup'+newPopup)..
+newPopupnewPopup.newPopup。风格=顶端；newPopup='newPopup.$=顶端；newPopup=parseInt$；$newPopup=parseInt$newPopupnewPopup(newPopup.风格.顶端)+Dy}PX'；.newPopup=风格=顶端；newPopup='newPopup.$=顶端；newPopup=parseInt$；$newPopup=parseInt$newPopupnewPopup(newPopup.风格.顶端)+Dy}PX'；newPopup。风格=顶端；newPopup=parseInt$；$newPopup；.parseInt$newPopupnewPopup.风格=newPopup.风格；.'newPopup.顶端=顶端；newPopup
+}}}}，);}，60);60);60}，60，60;60，60，60,60);))；}，60；);}，60);60);60})，60，60，60，60;6060)，60);));60，60;
+
+setTimeoutsetTimeout()setTimeoutsetTimeout()setTimeout(()setTimeout=>))=>setTimeoutsetTimeoutclearInterval；setTimeoutmoveInterval)setTimeout=>)moveInterval)=>setTimeoutsetTimeoutclearInterval；setTimeoutmoveIntervalmoveIntervalsetTimeoutclearInterval；setTimeoutmoveInterval(moveIntervalsetTimeout；setTimeout)(setTimeout)moveInterval)moveInterval=>moveIntervalsetTimeout()moveIntervalsetTimeoutclearInterval；setTimeoutmoveInterval(moveIntervalsetTimeoutclearInterval；setTimeoutmoveIntervalmoveInterval；setTimeout；setTimeoutmoveInterval=>clearInterval；setTimeoutmoveInterval(；setTimeout)=>clearInterval；setTimeoutmoveIntervalmoveInterval；setTimeout(，2000moveIntervalmoveIntervalclearInterval；setTimeoutmoveIntervalsetTimeoutclearIntervalmoveIntervalmoveIntervalclearIntervalmoveI间隔moveInterval=>moveIntervalsetTimeout((；setTimeoutclearInterval；setTimeoutmoveIntervalsetTimeoutmoveInterval=>clearInterval；setTimeoutmoveIntervalclearIntervalmoveIntervalmoveIntervalmoveIntervalclearInterval；setTimeoutmoveIntervalsetTimeoutclearInterval)(setTimeout)=>clearInterval(setTimeout(moveInterval；setTimeoutclearInterval；setTimeoutmoveIntervalsetTimeoutmoveInterval)=>clearIntervalmoveIntervalmoveIntervalmoveIntervalmoveInterval)=>setTimeout(moveIntervalmoveIntervalclearInterval；setTimeoutmoveIntervalsetTimeout)moveIntervalclearInterval=>clearIntervalclearIntervalmoveIntervalmoveInterval；setTimeoutclearInterval；setTimeoutmoveIntervalsetTimeoutmoveIntervalmoveInterval=>moveInterval=>clearInterval；=>)setTimeout)setTimeoutsetTimeout；))
+}}}}}}}}，数学，数学。 随机，数学，数学。 随机，数学，数学。 随机数学)，数学，数学。 随机，数学，数学。 随机，数学，数学。 随机数学 随机，数学，数学。 随机，数学，数学。 随机数学}；)，数学，数学。((，随机.)()随机))；随机}，随机，随机.随机，随机；随机(*；}，随机*随机)；随机；随机300； 随机}()，随机*随机，随机；随机；随机300()；}，数学，数学；随机数学(.数学)；；随机，随机；随机(，随机；随机.；)； ；，数学，数学.，随机.数学，数学，数学，随机*300))，数学，数学；随机300，数学，数学，随机*300(；随机(，随机，数学，数学；随机，随机； }，数学，数学；随机数学300，随机；随机；，随机；随机，数学，数学.)(；；随机，随机；随机*(，随机；随机}*})；；，数学，数学.)，数学，数学。}；)随机((，随机.)()，随机.))；随机}，随机，随机.随机，随机；随机(*；}，随机*随机)；随机；随机300；随机}()，随机*随机，随机；随机；随机300()；}，数学，数学； 随机数学(.数学)；；随机，随机；随机(，随机；随机.；)；；，数学，数学.，随机.数学，数学，数学，随机*300))，数学，数学；随机300，数学，数学，随机*300(； 随机(，随机，数学，数学；随机，随机；}，数学，数学； 随机数学300，随机；随机；，随机；随机，数学，数学.)(；；随机，随机；随机*(，随机；随机}*})；；，数学，数学.
+});}););});
+}}}
+
+// 修复：随机散布也用回调确保流程连贯// 修复：随机散布也用回调确保流程连贯
+函数randomSpawn(回调){功能(回调){函数功能(回调)randomSpawn功能(回拨)功能(回调){功能(回调){函数功能(回调)randomSpawn功能(回拨)功能
+ConstSpawnCountConstSpawnCountConstSpawnCountConstSpawnCountConstSpawnCountConstSpawnCountConstSpawnCountConstConstSpawnCountConstSpawnCount=常数；常数=spawnCount=spawnCountsspawnCount=spawnCount==常数；常数=spawnCount=spawnCountspawnCount=spawnCount=常数；常数=spawnCount=spawnCountsspawnCount=spawnCount==常数；常数=spawnCount=spawnCountspawnCount=spawnCount=常数；常数=spawnCount=spawnCountsspawnCount=spawnCount==常数；常数=spawnCount=spawnCountspawnCount=spawnCount=常数；常数=spawnCount=spawnCountsspawnCount=spawnCount==常数；常数=spawnCount=spawnCountspawnCount=spawnCount=常数；常数=spawnCount=spawnCountsspawnCount=spawnCount==常数；常数=spawnCount=spawnCountspawnCount=spawnCount=常数；常数=spawnCount=spawnCountsspawnCount=spawnCount==常数；常数=spawnCount=spawnCountspawnCount=spawnCount=常数；常数=spawnCount=spawnCountsspawnCount=spawnCount==常数；常数=spawnCount=spawnCountspawnCount=spawnCount=常数；常数=spawnCount=spawnCountsspawnCount=spawnCount==常数；常数=spawnCount=spawnCountspawnCount=spawnCount=
+让让让让让让让让让让让让让让让让=繁殖的；让派生=0；繁殖的；let流派=0；让=繁殖的；让流派=0；繁殖的；让流派=0；繁殖的；let流派=0；让=繁殖的；让流派=0；繁殖的；让派生=0；繁殖的；let流派=0；让=繁殖的；让流派=0；繁殖的；让派生=0；繁殖的；let流派=0；让=繁殖的；让派生=0；繁殖的；让派生=0；繁殖的；let流派=0；让=繁殖的；让流派=0；繁殖的；让流派=0；繁殖的；let流派=0；让=繁殖的；让流派=0；繁殖的；让派生=0；繁殖的；let流派=0；让=繁殖的；让流派=0；繁殖的；让派生=0；繁殖的；let流派=0；让=繁殖的；让派生=0；
+为(让ifor(让i为(让ifor(让i为)让ifor(让i为)让i为(让ifor(让i为)让ifor(让i为)让ifor(让i为)让ifor(让i为)让ifor(让i为)让ifor(让i为)让i为(让i=为；我<繁殖计数；我++让{for我let=我=我<spawnCount<我++我++){为；我<繁殖计数；我++让{for我let=我=我<spawnCount<我++我++){为；我<繁殖计数；我++让{for我let=我=我<spawnCount<我++我++){为；我<繁殖计数；我++让{for我let=我=我<spawnCount<我++我++){为；我<繁殖计数；我++让{for我let=我=我<spawnCount<我++我++){为；我<繁殖计数；我++让{for我let=我=我<spawnCount<我++我++){为；我<繁殖计数；我++让{for我let=我=我<spawnCount<我++我++){为；我<繁殖计数；我++让{for我let=我=我<spawnCount<我++我++){为；我<繁殖计数；我++让{for我let=我=我<spawnCount<我++我++){为；我<繁殖计数；我++让{for我let=我=我<spawnCount<我++我++){为；我<繁殖计数；我++让{for我let
+setTimeout
+ConstxConstXConstxConstX=Const.X()=数学窗口.随机-100)+50窗口X=innerWidth。随机()+(窗口。innerWidth-100)+50；常数X()=Const.X()=数学窗口.随机-100)+50窗口X=innerWidth。随机()+(窗口。innerWidth-100)+50；常数X()=
+=-80-))+40；常数y常数Y()=数学窗口.随机-80)+40=窗口y=内部高度().随机(=内部高度。随机)+(窗口。内部高度()-80.)+40；常数y+40；常数y=数学窗户.随机()=数学窗户。随机window.InnerHeight-80窗口y=innerHeight窗口y=随机()+(.窗口.InnerHeight)+80窗口=内高度；常数).Y窗口.内部高度+80)=数学窗口；常数y()=随机-80)+40窗口y=内部高度.随机.随机()+(窗口。内部高度-80-))+40；常数y
+=.提示(数学长度()*tips.length)]；Const[Math.文本(数学=提示(数学*地板.长度数学]；Const text=随机[Math.提示(Math.长度()*tips.length)]；常数[数学文本(数学=提示(数学*地板.长度数学]；Const text=随机[Math.提示(Math.长度()*tips.length)]；Const[Math.文本(数学=提示(数学*地板.长度数学]；Const text=随机[Math.提示(Math.长度()*tips.length)]；
+=*colors.length)]；Const[Math.颜色(数学=颜色(数学*地板.长度数学]；Const color=随机[Math.颜色(Math.长度()*colors.length)]；常数[数学颜色(数学=颜色(数学*地板.长度数学]；Const color=随机[Math.颜色(Math.长度()*colors.length)]；Const[Math.颜色(数学=颜色(数学*地板.长度数学]；Const color=随机[Math.颜色(Math.长度()*colors.length)]；
+；
+繁殖的繁殖的繁殖的繁殖的++繁殖的++;繁殖的++;繁殖的++;繁殖的++;
+if(繁殖的if(繁殖的if(繁殖的if(繁殖的==如果){if(繁殖的==spawnCount){如果){if(繁殖的==spawnCount){如果){if(繁殖的===spawnCount){如果){if(繁殖的===spawnCount){
+回调()；回调()回调()；回调()；
+}
+}
+}
+}
+<</脚本>/脚本>脚本>/脚本>/脚本>脚本>/脚本>/脚本>脚本>
+<</身体>/身体>身体>/身体>/身体>身体>/身体>/身体>身体>
+<</超文本标记语言>/超文本标记语言>超文本标记语言>
