@@ -1,208 +1,59 @@
 <！doctype 超文本标记语言>
-<超文本标记语言<html 朗="zh-CN">Lang="zh-CN">
+<超文本标记语言 朗="zh-CN">
 <头>
-<元 字符集="UTF-8"><元 字符集="UTF-8">
-<元 姓名=元内容=姓名>内容元=
-<标题>计算机的浪漫-爱心动态效果</标题><标题>计算机的浪漫 - 爱心动态效果</标题>
-<风格><
-正文{身体 {
-页边距：0；边缘：0;
-填充：0；填充：0;
-背景色：#000；背景色: #000;
-溢出：隐藏；溢出：隐藏的;
-高度：100vh；高度：100；
-    }
-。弹出窗口{弹出窗口。{
-位置：绝对；位置：绝对的;
-填料：12px8px；padding:12 PXPX；
-边界半径：8px；border-radius:8；
-颜色：#FFF；颜色： #FFF；
-字体系列："平方SC"，"微软雅黑""平方SC"，无衬线；字体系列："平方SC"，"微软雅黑"，
-字体大小：14:14px；字体；
-文本对齐：居中；文本对齐：中心;
-盒阴影：02px10pxrgba(0，0，0，0.4)；长方体阴影：02PX10PXRGBA(0，0，0，0.4)；
-动画：淡入0.6s淡入淡出；动画：淡入0.6s易进易出；
-Z指数：10；z指数：10；
-显示：柔性；显示：弯曲;
-对齐项：居中；对齐项目：中心;
-对齐-内容：居中；justify-content：中心；
+  <元 字符集="UTF-8">
+  <元 姓名="视口" 内容="宽度=设备宽度，初始比例=1.0">
+  <标题>爱心动画</标题>
+  <风格>
+身体 { 边缘: 0; 填充: 0; 背景: #000;高度: 100VH; }
+#startBtn{
+位置: 绝对的; 顶端: 50%; 左: 50%; 改变: 翻译(-50%, -50%);
+填充：15px30px；背景：#ff69b4；颜色：#FFF；边境：没有一个；
+边界半径：30px；字体大小：16px；光标：指针；Z指数：999；
 }
-@keyframes 淡入{@个关键帧淡入{
-来自{从……起 {
-不透明度：0；不透明度：0;
-变换：比例(0.7)；变换：规模(0.7);
+.弹出窗口 {
+位置：绝对的；填充：10px；边界半径：8px；颜色：#FFF；
+字体大小：14px；文本对齐：中心；动画：褪色0.5s；
 }
-至{到 {
-不透明度：0.95；不透明度: 0.
-        transform: scale(1);
-      }
-    }
-    #startBtn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 14px 28px;
-      background-color: #ff69b4;
-      color: #fff;
-      border: none;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      z-index: 9999;
-      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.5);
-      transition: all 0.3s ease;
-    }
-    #startBtn:hover {
-      background-color: #ff4da6;
-      transform: translate(-50%, -50%) scale(1.05);
-    }
-  </style>
-</head>
-<body>
-  <button id="startBtn">点击开始 · 计算机的浪漫</button>
+@keyframes 褪色{从……起{不透明度：0；}到{不透明度：0.9；}}
+  </风格>
+</头>
+<身体>
+  <按钮 身份标识="startBtn">点击开始</按钮>
 
-  <script>
-    const tips = [
-      "愿你天天开心，没有烦恼",
-      "好好吃饭，照顾好自己",
-      "每晚都能睡个好觉",
-      "祝你事事顺遂",
-      "平安健康，才是最重要的",
-      "每天都有一点小幸运",
-      "一切都会越来越好的",
-      "保持微笑，你笑起来最好看",
-      "愿你拥有温暖和安全感",
-      "简单快乐，知足常乐",
-      "充满能量，活力满满",
-      "所有努力都有回报",
-      "吃得好，睡得香，没病没灾",
-      "愿你心想事成",
-      "生活会越来越美好",
-      "拥有坚定的信念和勇气",
-      "每天进步一点点",
-      "愿你被世界温柔以待",
-      "保持积极乐观的心态",
-      "慢慢来，别急"
-    ];
+  <脚本>
+// 1. 点击按钮直接触发动画
+文件.getElementById('startBtn')。onclick=功能(){
+这.风格.显示='无'; // 隐藏按钮
+createHeart()；//直接生成爱心弹窗
+};
 
-    const colors = [
-      "#FFB6C1", "#FFD700", "#FF69B4", "#FF6347", "#00CED1",
-      "#BA55D3", "#32CD32", "#87CEFA", "#8B00FF", "#98FB98",
-      "#FFA07A", "#20B2AA", "#FF4500", "#9370DB", "#3CB371"
-    ];
+// 2. 生成爱心形状的弹窗
+功能createHeart(){
+Const颜色=["#FFB6C1"，"#FF69B4"，"#FFD700"，"#00CED1"，"#BA55D3"]；
+Const提示=["慢慢来"，"天天开心"，"平安健康"，"一切顺利"]；
+Const centerX=窗户.inner Width/2；
+Const中心=窗户.innerHeight/2；
 
-    const startBtn = document.getElementById('startBtn');
-    startBtn.addEventListener('click', () => {
-      startBtn.style.display = 'none';
-      startAnimation();
-    });
+// 循环生成50个弹窗组成爱心
+为 (让 我=0; 我<50; 我++) {
+setTimeout(()=>{
+Const Theta=我*2*数学.pi/50；
+Const r=80*数学.罪恶(Theta)*数学.罪恶(Theta)*数学.罪恶(Theta)；
+Const x=centerX+120*数学.罪恶(Theta)*r；
+const y=中心-80*数学.Cos(Theta)*r；
 
-    // 修复：用回调函数确保获取到所有弹窗后再执行下一步
-    function startAnimation() {
-      heartFormation((heartPopups) => {
-        setTimeout(() => {
-          explodeHearts(heartPopups);
-          setTimeout(() => {
-            randomSpawn(() => {
-              setTimeout(() => {
-                heartFormation(() => {});
-              }, 3000);
-            });
-          }, 3000);
-        }, 5000);
-      });
-    }
-
-    function createPopup(x, y, text, color, isHeart = false) {
-      const popup = document.createElement('div');
-      popup.className = 'popup';
-      const width = isHeart ? 70 : 90;
-      const height = isHeart ? 50 : 70;
-      popup.style.width = `${width}px`;
-      popup.style.height = `${height}px`;
-      popup.style.left = `${Math.max(0, Math.min(x - width/2, window.innerWidth - width))}px`;
-      popup.style.top = `${Math.max(0, Math.min(y - height/2, window.innerHeight - height))}px`;
-      popup.style.backgroundColor = color;
-      popup.innerText = text;
-      document.body.appendChild(popup);
-      return popup;
-    }
-
-    // 修复：用回调函数返回所有弹窗，确保不遗漏
-    function heartFormation(callback) {
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-      const centerX = screenWidth / 2;
-      const centerY = screenHeight / 2;
-      const count = 45;
-      const size = Math.min(screenWidth, screenHeight) / 9;
-      const positions = [];
-      const popups = [];
-
-      for (let i = 0; i < count; i++) {
-        const theta = i * 2 * Math.PI / count;
-        const r = size * (1 - 0.8 * Math.abs(theta / Math.PI - 1));
-        const x = centerX + r * (16 * Math.pow(Math.sin(theta), 3));
-        const y = centerY - r * (13 * Math.cos(theta) - 5 * Math.cos(2*theta) - 2 * Math.cos(3*theta) - Math.cos(4*theta));
-        positions.push({ x, y });
-      }
-
-      positions.forEach((pos, index) => {
-        setTimeout(() => {
-          const text = tips[Math.floor(Math.random() * tips.length)];
-          const color = colors[Math.floor(Math.random() * colors.length)];
-          const popup = createPopup(pos.x, pos.y, text, color, true);
-          popups.push(popup);
-          // 所有弹窗生成完毕后，调用回调返回数组
-          if (popups.length === count) {
-            callback(popups);
-          }
-        }, index * 60);
-      });
-    }
-
-    function explodeHearts(heartPopups) {
-      heartPopups.forEach(popup => {
-        setTimeout(() => {
-          const x = parseInt(popup.style.left) + parseInt(popup.style.width) / 2;
-          const y = parseInt(popup.style.top) + parseInt(popup.style.height) / 2;
-弹出窗口.移除()；弹出窗口.移除();
-常量文本=提示[数学.地板(数学.随机()*提示.长度数学]；常数文本=随机[数学.提示(数学.长度()*提示.长度)];
-Const颜色=颜色[数学.地板(数学.随机()*颜色.长度)；常数；常数；常数=颜色[数学=颜色[数学.地板(数学*随机.()]*
-ConstnewPopup=createPopup(X，y，文本，颜色)；常数newPopup=createPopup(X，y, 文本, 颜色);
-
-常数moveInterval=setInterval(()=>moveIntervalconst=setInterval=moveInterval(()=>{
-ConstDX=数学.随机()*8-4；常数=DX=随机；ConstDX)=数学.随机;
-ConstDy=数学.随机()*8-4；常数=Dy=随机；ConstDy)=数学.随机;
-newPopup.风格.左=左；newPopup=；newPopup${.=parseInt${newPopupnewPopupnewPopupnewPopupNewPopup(.newPopup)+风格$)PX’；
-newPopup。风格{=顶端{newPopup(newPopup='${parseInt(newPopup.风格.顶端)=parseInt$}newPopup
-}，60);}, 60);
-
-setTimeout(()=>clearInterval(moveInterval)，2000)；setTimeout=>clearInterval(()=>clearInterval(；
-}，数学。随机()*300)；}，数学.随机() * 300);
-      });
-    }
-
-// 修复：随机散布也用回调确保流程连贯// 修复：随机散布也用回调确保流程连贯
-函数randomSpawn(回调){功能randomSpawn(回调){
-ConstSpawnCount=35；常数=spawnCount=
-让繁殖的=0；让=繁殖的;
-为(让i=0<；i<繁殖计数；我{为++)=我=为<(<让++我=0；我
-setTimeout(()=>{setTimeout((=>{
-Constx=数学.随机()*(.窗户-innerWidth)+100窗户x=innerWidth.随机()+50；常数.x=数学).随机；
-常数y=数学.随机()*(.窗户-innerHeight)+80窗户y+40.；常数y)=数学窗户。随机-()*(；
-常量文本=提示[数学.地板(数学.随机()*提示.长度)；常数；常数=文本[数学=提示[数学.地板(数学*随机.()]*
-Const颜色=颜色[数学.地板(数学.随机()*颜色.长度)；常数；常数=颜色[数学=颜色[数学.地板(数学*随机.()]*
-createPopup(X，y，文本，颜色)；createPopup(X，y，文本，颜色)；
-繁殖的++；派生的++;
-如果(繁殖的如果(繁殖的===繁殖计数){如果(繁殖的===spawnCount){繁殖计数){如果(繁殖的===spawnCount){
-回调()；回调()回调()；回调();
-          }
-}，i}，i*120)；}，我*120)；120)；}，我*120)；
-      }
-    }
-</脚本>/脚本>
-</身体>/身体>
-</超文本标记语言>/超文本标记语言>
+// 创建弹窗
+Const弹出窗口=文件.createElement('div')；
+弹出窗口.className='弹出'；
+弹出窗口.风格.左=X+'px'；
+弹出窗口.风格.顶端=y+'px'；
+弹出窗口.风格.backgroundColor=颜色[数学.地板(数学.随机()*颜色.长度)]；
+弹出窗口.内部文本=提示[数学.地板(数学.随机() * 提示.长度)];
+document.body.appendChild(弹出式菜单)；文件.身体.appendChild(弹出窗口)；
+}，i*50)；//逐个出现，形成动画}, 我 * 50); // 逐个出现，形成动画
+}
+}
+  </脚本>
+</身体>
+</超文本标记语言>
