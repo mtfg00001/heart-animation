@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计算机的浪漫-爱心弹窗</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #1e1e1e;
+      overflow: hidden;
+      font-family: "Microsoft Yahei", sans-serif;
+    }
+    .note {
+      position: absolute;
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.5s ease-in-out;
+      max-width: 80%;
+      word-break: break-all;
+    }
+    @keyframes 淡入 {
+      从……起 {
+        不透明度: 0;
+        改变: 规模(0.5);
+      }
+      到 {
+        不透明度: 1;
+        改变: 规模(1);
+      }
+    }
+  </风格>
+</头>
+<身体>
+  <脚本>
+    // 温馨提示语数组
+    Const 注释=[
+      "愿你天天开心，没有烦恼。",
+      "好好吃饭，照顾好自己。",
+      "每晚都能睡个好觉。",
+      "祝你事事顺遂。",
+      "要平安健康，这是最重要的。",
+      "愿你每天都有一点小幸运。",
+      "一切都会越来越好的。",
+      "保持微笑，你笑起来最好看。",
+      "愿你拥有温暖的心情和氛围。",
+      "简单快乐，知足常乐。",
+      "愿你充满能量，活力满满。",
+      "所有的努力都有回报。",
+      "吃得好，睡得香，没病没灾。",
+      "愿你心想事成。",
+      "每天都有一点小幸运。",
+      "生活会越来越美好的。",
+      "愿你拥有坚定的信念和勇气。",
+      "每天进步一点点。",
+      "愿你被世界温柔以待。",
+      "保持积极乐观的心态。",
+      "愿你拥有无限的创造力和灵感。",
+      "愿你每天都能发现生活中的美好。",
+      "愿你拥有坚定的信念和勇气。",
+      "愿你心中充满爱与希望。",
+      "慢慢来",
+      "一切都会是最好的安排",
+      "请你务必，一而再再而三，三而不竭，千次万次，毫不犹豫地救自己于这世间水火",
+      "请你认真地做个普通人，吃好，睡好，锻炼身体，热爱生活，你平凡的一生已经是无数人求而不得的人生了",
+      "请你永远不要被廉价的言论和情感煽动，保持理性和判断，永远不要放弃思考",
+      "请你相信，你配得上这世界上所有的美好",
+      "请你保持善良，但不要对人性抱有过高的期望",
+      "请你学会接受自己的不完美，然后尽全力去变得更好",
+      "请你记住，你的价值从不取决于他人的认可",
+      "请你好好爱自己，像爱你最珍视的人那样"
+];
+
+// 颜色数组// 颜色数组
+常量颜色=康斯康斯特颜色=[
+"#FFB6C1"，"#FFB6C1"，"#FFB6C1"，"#FF69B4"，"#FFD700"，"#00CED1"，"#FF69B4"，"#FF69B4"，"#FF6347"，"#00CED1"，
+"#BA55D3"，"#BA55D3"，"#BA55D3"，"#87CEFA"，"#32CD32""#BA55D3"，"#87CEFA"，"#87CEFA"，"#8B00FF"，"#98FB98"
+];
+
+// 创建随机位置的提示框// 创建随机位置的提示框
+函数createNote(){功能createNote() {
+Const笔记=文件.createElement("div")；常数笔记=文件.createElement("div");
+笔记.className=className；注释="注意"="注意";
+笔记.innerHTML=注释[数学.地板(数学.随机()*注释.长度)]；注释.innerHTML=注释[数学.地板(数学.随机() * 注释.长度)];
+笔记.风格.backgroundColor=颜色[数学.地板(数学.随机()*颜色.长度)]；注释.风格.backgroundColor=颜色[数学.地板(数学.随机() * 颜色.长度)];
+      
+// 手机屏幕适配的随机位置// 手机屏幕适配的随机位置
+ConstscreenWidth=窗户.innerWidth；常量=screenWidth=窗户.innerWidth;
+ConstscreenHeight=窗户.内高度；常量=screenHeight=窗户.innerHeight;
+注释.风格.左=左；笔记=；注释${.=数学${数学.风格${)*(screenWidth-120)}PX’；
+注释.风格{=顶端{数学='${数学.随机()PX'；注释).风格屏幕高度-顶端){\f25px'；
+      
+文件.身体.appendChild(笔记)；文档.身体.appendChild(；
+      
+// 一段时间后移除，营造动态效果// 一段时间后移除，营造动态效果
+setTimeout(()=>{setTimeout((=>{
+笔记.风格.不透明度="0"=；注释.风格.不透明度=
+笔记.风格.过渡=“不透明度0.5s易进易出"；笔记.风格.过渡="不透明度0.5s缓进缓出"；
+setTimeout(()=>{setTimeout((=>{
+文件.身体.removeChild(笔记)；文档.身体.removeChild(；
+}，500);}, 500);
+}，3000，3000+数学.随机()*2000)；}，3000+数学.随机()*2000)；
+    }
+
+// 定时创建提示框// 定时创建提示框
+setInterval(createNote，300)；setInterval(createNote，300)；
+</脚本></脚本>
+</身体>
+</超文本标记语言>
